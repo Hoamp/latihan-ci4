@@ -13,7 +13,6 @@ class Komik extends BaseController
     }
     
     public function index(){
-        // $komik = $this->komikModel->findAll();
 
         $data = [
             'title' => 'Daftar Komik',
@@ -37,14 +36,32 @@ class Komik extends BaseController
     }
 
     public function create(){
+        
         $data = [
-            'title' => 'Form Tambah Data Komik',    
+            'title' => 'Form Tambah Data Komik', 
+            'validation' => \Config\Services::validation()   
         ];
 
         return view('komik/create' , $data);
     }
 
     public function save(){
+        // Validasi input
+        if(!$this->validate([
+            'judul' => [
+                'rules' => 'required|is_unique[komik.judul]',
+                'errors' => [
+                    'required' => '{field} komik harus diisi',
+                    'is_unique' => '{field} sudah ada'
+                ]    
+            ]
+        ])) {
+            $validation = \Config\Services::validation();
+            
+            return redirect()->to('/komik/create')->withInput()->with('validation', $validation);
+        }
+
+
         $slug = url_title($this->request->getVar('judul'), '-', true);
         
         $this->komikModel->save([
