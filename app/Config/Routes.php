@@ -38,6 +38,10 @@ $routes->set404Override();
 $routes->setAutoRoute(true);
 
 $routes->get('/', 'Pages::index');
+
+// untuk pages komik
+$routes->get('/komik/create', 'Komik::create');
+$routes->get('/komik/save', 'Komik::save');
 $routes->get('/komik/(:segment)', 'Komik::detail/$1');
 
 
