@@ -56,9 +56,8 @@ class Komik extends BaseController
                 ]    
             ],
             'sampul' => [
-                'rules' => 'uploaded[sampul]|max_size[sampul,1024]|is_image[sampul]|mime_in[sampul,image/jpg,image/jpeg,image/png]',
+                'rules' => 'max_size[sampul,1024]|is_image[sampul]|mime_in[sampul,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'uploaded' => 'silahkan pilih sampul terlebih dahulu',
                     'max_size' => 'ukuran terlalu besar',
                     'is_image' => 'yang anda pilih bukan gambar',
                     'mime_in' => 'yang anda pilih bukan gambar'
@@ -75,11 +74,17 @@ class Komik extends BaseController
         // mengambil gambar
         $fileSampul = $this->request->getFile('sampul');
 
-        // generate nama sampul random
-        $namaSampul = $fileSampul->getRandomName();
-        
-        // memindahkan file ke folder img
-        $fileSampul->move('img', $namaSampul);;
+        // mengecek apakah tidak ada gambar yang di upload
+        if($fileSampul->getError() == 4){
+            $namaSampul = 'ori.png';
+        }else{
+            // generate nama sampul random
+            $namaSampul = $fileSampul->getRandomName();
+            
+            // memindahkan file ke folder img
+            $fileSampul->move('img', $namaSampul);
+        }
+
 
         $slug = url_title($this->request->getVar('judul'), '-', true);
         
