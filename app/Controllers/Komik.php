@@ -12,8 +12,7 @@ class Komik extends BaseController
         $this->komikModel = new KomikModel();
     }
     
-    public function index(){
-
+    public function index(){        
         $data = [
             'title' => 'Daftar Komik',
             'komik' => $this->komikModel->getKomik()
