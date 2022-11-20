@@ -4,8 +4,18 @@
 
 <div class="container my-3">
     <div class="row">
-        <div class="col">
+        <div class="col-md-5">
             <h1 class="mb-2">Daftar Orang</h1>
+            <form action="" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Masukkan keyword pencarian" name="keyword">
+                    <button class="btn btn-outline-secondary" type="submit" name="submit">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <table class="table">
                 <thead>
                     <tr>
